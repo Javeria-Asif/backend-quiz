@@ -31,17 +31,37 @@ app.use('/api/auth', authRouter);
 
 // app.use(passport.initialize());
 // app.use(passport.session());
-app.get('/', async (req, res) => {
+app.get('/', (req, res) => {
   res.status(200).json({ message: 'hello world' });
 });
-
+app.get('/healtz',(req,res)=>res.status(200).send())
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://javeriaasif70:Javeria@cluster0.q4axtk1.mongodb.net/quiz', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('MongoDB connected successfully'))
-.catch(err => console.error('MongoDB connection error:', err));
+let cachedDb = null;
+
+async function connectToDatabase() {
+  if (cachedDb) {
+    return cachedDb;
+  }
+
+  const db = await mongoose.connect('mongodb+srv://javeriaasif70:Javeria@cluster0.q4axtk1.mongodb.net/quiz', {
+       useNewUrlParser: true,
+       useUnifiedTopology: true
+     })
+   .then(() => console.log('MongoDB connected successfully'))
+     .catch(err => console.error('MongoDB connection error:', err));
+  cachedDb = db;
+  return db;
+}
+app.get('/', async (req, res) => {
+  await connectToDatabase();
+  res.status(200).json({ message: 'hello world' });
+});
+// mongoose.connect('mongodb+srv://javeriaasif70:Javeria@cluster0.q4axtk1.mongodb.net/quiz', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// })
+// .then(() => console.log('MongoDB connected successfully'))
+// .catch(err => console.error('MongoDB connection error:', err));
 
 // Start the server
 app.listen(5000, () => console.log('Server running on port 5000'));
