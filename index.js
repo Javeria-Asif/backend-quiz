@@ -1,25 +1,27 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const questionsRouter = require('./routes/Question');
+const resultsRouter = require('./routes/Result');
 // const session = require('express-session');
 // const passport = require('passport');
 // const User = require('./models/Users');
 // require('./config/passport')(passport);
 const cors = require('cors');
-// const authRouter = require('./routes/Auth');
+const authRouter = require('./routes/Auth');
 // app.use('/api/auth', authRouter);
 // const WebSocket = require('ws');
 // const wss = new WebSocket.Server({ port: 3000 });
 
 
 const app = express();
-const questionsRouter = require('./routes/Question');
-const resultsRouter = require('./routes/Result');
+
 
 app.use(cors());
 app.use(express.json());
 app.use('/api/questions', questionsRouter);
 app.use('/api/results', resultsRouter);
-app.use(express.json());
+app.use('/api/auth', authRouter);
+
 
 // app.use(session({
 //   secret: 'your-secret-key',
