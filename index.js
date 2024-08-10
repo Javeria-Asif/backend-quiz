@@ -31,7 +31,9 @@ app.use('/api/auth', authRouter);
 
 // app.use(passport.initialize());
 // app.use(passport.session());
-app.get('/',(req,res)=>res.status(200).json({message:'hellow world'}))
+app.get('/', async (req, res) => {
+  res.status(200).json({ message: 'hello world' });
+});
 
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://javeriaasif70:Javeria@cluster0.q4axtk1.mongodb.net/quiz', {
@@ -44,4 +46,4 @@ mongoose.connect('mongodb+srv://javeriaasif70:Javeria@cluster0.q4axtk1.mongodb.n
 // Start the server
 app.listen(5000, () => console.log('Server running on port 5000'));
 
-module.exports = app;
+module.exports = app
