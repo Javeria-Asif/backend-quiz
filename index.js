@@ -43,3 +43,4 @@ mongoose.connect('mongodb+srv://javeriaasif70:Javeria@cluster0.q4axtk1.mongodb.n
 
 // Start the server
 app.listen(5000, () => console.log('Server running on port 5000'));
+
